@@ -1,6 +1,6 @@
 const MOCK_BOOKS = [
   {
-    id: "1",
+    id: 1,
     title: "Book 1",
     description: "Description 1",
     authors: "Authors 1",
@@ -9,7 +9,7 @@ const MOCK_BOOKS = [
     fileName: "Filename 1",
   },
   {
-    id: "2",
+    id: 2,
     title: "Book 2",
     description: "Description 2",
     authors: "Authors 2",
@@ -18,7 +18,7 @@ const MOCK_BOOKS = [
     fileName: "Filename 2",
   },
   {
-    id: "3",
+    id: 3,
     title: "Book 3",
     description: "Description 3",
     authors: "Authors 3",
@@ -41,4 +41,14 @@ const API_URL = "/api";
 const USER_URL = API_URL + "/user";
 const BOOKS_URL = API_URL + "/books";
 
-module.exports = { MOCK_BOOKS, REQUIRED_FIELDS, USER_URL, BOOKS_URL };
+const NO_BOOK_BY_ID = "Didn't find the book with such id!";
+const NO_BOOK_ID = "Show me some book ID, boy";
+
+module.exports = {
+  MOCK_BOOKS,
+  REQUIRED_FIELDS,
+  USER_URL,
+  BOOKS_URL,
+  NO_BOOK_BY_ID,
+  NO_BOOK_ID,
+};
