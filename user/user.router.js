@@ -1,8 +1,13 @@
+const express = require("express");
 const UserController = require("./user.controller");
 const userController = new UserController();
 
-const userRouter = (baseUrl) => (server) => {
-  server.route(`${baseUrl}/login`).post(userController.login);
+const UserRouter = () => {
+  const newRouter = express.Router();
+
+  newRouter.route(`/login`).post(userController.login);
+
+  return newRouter;
 };
 
-module.exports = userRouter;
+module.exports = UserRouter;

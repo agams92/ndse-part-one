@@ -1,3 +1,5 @@
+const BOOKS_FILE_PATH = "public/books";
+
 const MOCK_BOOKS = [
   {
     id: 1,
@@ -7,6 +9,7 @@ const MOCK_BOOKS = [
     favorite: "Favorite 1",
     fileCover: "Filecover 1",
     fileName: "Filename 1",
+    fileBook: `${BOOKS_FILE_PATH}/book.pdf`,
   },
   {
     id: 2,
@@ -16,6 +19,7 @@ const MOCK_BOOKS = [
     favorite: "Favorite 2",
     fileCover: "Filecover 2",
     fileName: "Filename 2",
+    fileBook: `${BOOKS_FILE_PATH}/book.pdf`,
   },
   {
     id: 3,
@@ -25,6 +29,7 @@ const MOCK_BOOKS = [
     favorite: "Favorite 3",
     fileCover: "Filecover 3",
     fileName: "Filename 3",
+    fileBook: `${BOOKS_FILE_PATH}/book.pdf`,
   },
 ];
 
@@ -51,4 +56,5 @@ module.exports = {
   BOOKS_URL,
   NO_BOOK_BY_ID,
   NO_BOOK_ID,
+  BOOKS_FILE_PATH,
 };
