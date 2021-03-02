@@ -1,6 +1,6 @@
 const express = require("express");
 const { fileUpload } = require("../middlewares");
-const BookController = require("./book.controller");
+const { BookController } = require("../controllers");
 const bookController = new BookController();
 
 const BookRouter = () => {

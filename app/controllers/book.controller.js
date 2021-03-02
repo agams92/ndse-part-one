@@ -1,11 +1,11 @@
 const path = require("path");
-const {
-  MOCK_BOOKS,
-  REQUIRED_FIELDS,
-  NO_BOOK_BY_ID,
-  NO_BOOK_ID,
-} = require("../constants");
+const { REQUIRED_FIELDS, NO_BOOK_BY_ID, NO_BOOK_ID } = require("../constants");
 const { hasOwnProps } = require("../utils");
+const { Book } = require("../models");
+
+const MOCK_BOOKS = [1, 2, 3].map((el) => {
+  return new Book({ title: `book ${el}`, description: `description ${el}` });
+});
 
 class BookController {
   getAllBooks(req, res) {
@@ -24,25 +24,19 @@ class BookController {
   }
 
   addBook(req, res) {
-    if (req.body && req.file) {
-      const hasAllFields = hasOwnProps(req.body, REQUIRED_FIELDS);
-      if (hasAllFields) {
-        const sortedBooksIds = MOCK_BOOKS.map((bk) => bk.id).sort(
-          (a, b) => a - b
-        );
-        const largestId = sortedBooksIds[sortedBooksIds.length - 1];
-        const newBookId = largestId + 1;
-        const newBook = REQUIRED_FIELDS.reduce(
-          (book, field) => {
-            return { ...book, [field]: req.body[field] };
-          },
-          { id: newBookId }
-        );
-        newBook.fileBook = req.file.path;
-        MOCK_BOOKS.push(newBook);
-        return res.status(201).json(newBook);
+    const { body, file } = req;
+    if (body) {
+      if (file) {
+        const hasAllFields = hasOwnProps(body, REQUIRED_FIELDS);
+        if (hasAllFields) {
+          const bookParams = { ...body, fileBook: file.path };
+          const newBook = new Book(bookParams);
+          MOCK_BOOKS.push(newBook);
+          return res.status(201).json(newBook);
+        }
+        return res.status(400).json("Some field are missing in request");
       }
-      return res.status(400).json("Some field are missing in request");
+      return res.status(400).json("Where is book file, Bukovski?");
     }
     return res.status(400).json("Where is request body, Lebovski?");
   }
@@ -82,7 +76,7 @@ class BookController {
     if (bookIndex === -1) return res.status(404).json(NO_BOOK_BY_ID);
 
     const book = MOCK_BOOKS[bookIndex];
-    const filePath = path.join(__dirname, "..", book.fileBook);
+    const filePath = path.join(__dirname, "..", "..", book.fileBook);
     return res.download(filePath, "book.pdf", (err) => {
       if (err) {
         res.status(404).json(err);
