@@ -1,5 +1,5 @@
 const express = require("express");
-const { fileUpload } = require("../middlewares");
+const { fileUpload } = require("../../middlewares");
 const { BookController } = require("../controllers");
 const bookController = new BookController();
 

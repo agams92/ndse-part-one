@@ -1,14 +1,14 @@
-const path = require("path");
-const { REQUIRED_FIELDS, NO_BOOK_BY_ID, NO_BOOK_ID } = require("../constants");
-const { hasOwnProps } = require("../utils");
-const { Book } = require("../models");
+const path = require('path');
+const { REQUIRED_FIELDS, NO_BOOK_BY_ID, NO_BOOK_ID, APP_ROOT_PATH } = require('../../constants');
+const { hasOwnProps } = require('../../utils');
+const { Book } = require('../../models');
 
 const MOCK_BOOKS = [1, 2, 3].map((el) => {
   return new Book({ title: `book ${el}`, description: `description ${el}` });
 });
 
 class BookController {
-  getAllBooks(req, res) {
+  getAllBooks(_, res) {
     const booksToReturn = MOCK_BOOKS || [];
     return res.status(200).json(booksToReturn);
   }
@@ -34,11 +34,11 @@ class BookController {
           MOCK_BOOKS.push(newBook);
           return res.status(201).json(newBook);
         }
-        return res.status(400).json("Some field are missing in request");
+        return res.status(400).json('Some field are missing in request');
       }
-      return res.status(400).json("Where is book file, Bukovski?");
+      return res.status(400).json('Where is book file, Bukovski?');
     }
-    return res.status(400).json("Where is request body, Lebovski?");
+    return res.status(400).json('Where is request body, Lebovski?');
   }
 
   modifyBookById(req, res) {
@@ -65,7 +65,7 @@ class BookController {
       const bookIndex = MOCK_BOOKS.findIndex((book) => book.id == id);
       if (bookIndex === -1) return res.status(404).json(NO_BOOK_BY_ID);
       MOCK_BOOKS.splice(bookIndex, 1);
-      return res.status(200).json("ok");
+      return res.status(200).json('ok');
     }
     return res.status(404).json(NO_BOOK_ID);
   }
@@ -76,8 +76,8 @@ class BookController {
     if (bookIndex === -1) return res.status(404).json(NO_BOOK_BY_ID);
 
     const book = MOCK_BOOKS[bookIndex];
-    const filePath = path.join(__dirname, "..", "..", book.fileBook);
-    return res.download(filePath, "book.pdf", (err) => {
+    const filePath = path.join(APP_ROOT_PATH, book.fileBook);
+    return res.download(filePath, 'book.pdf', (err) => {
       if (err) {
         res.status(404).json(err);
       }

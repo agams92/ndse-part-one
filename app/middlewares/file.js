@@ -1,25 +1,23 @@
-const multer = require("multer");
-const { BOOKS_FILE_PATH } = require("../constants");
+const multer = require('multer');
+const { BOOKS_FILE_PATH } = require('../constants');
 
 const storage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination(_, __, cb) {
     cb(null, BOOKS_FILE_PATH);
   },
-  filename(req, file, cb) {
-    cb(
-      null,
-      `${new Date().toISOString().replace(/:/g, "-")}-${file.originalname}`
-    );
+  filename(_, file, cb) {
+    cb(null, `${new Date().toISOString().replace(/:/g, '-')}-${file.originalname}`);
   },
 });
 
-const allowedTypes = ["application/pdf"];
+const allowedTypes = ['application/pdf'];
 
-const fileFilter = (req, file, cb) => {
-  if (allowedTypes.includes(file.mimetype)) {
+const fileFilter = (_, file, cb) => {
+  const { mimetype } = file;
+  if (allowedTypes.includes(mimetype)) {
     cb(null, true);
   } else {
-    cb(null, false);
+    cb(new Error(`Sorry, I cannot accept file with this type: ${mimetype}`));
   }
 };
 
