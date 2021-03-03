@@ -17,20 +17,23 @@ class BookRenderController {
   }
 
   addBook(req, res) {
-    const { method, body } = req;
+    const { method, body, file } = req;
     if (method === 'GET') return res.render('books/create', { title: 'Добавить книгу', book: {} });
     if (method === 'POST') {
+      // if (file) {
       if (body) {
         const hasAllFields = hasOwnProps(body, REQUIRED_FIELDS);
         if (hasAllFields) {
-          const newBook = new Book(...body);
+          const newBook = new Book(body);
           const { id } = newBook;
           MOCK_BOOKS.push(newBook);
-          return res.redirect(`${BOOKS_URL}/view/${id}`);
+          return res.redirect(`${BOOKS_URL}/${id}`);
         }
         return res.status(400).json('Some field are missing in request');
       }
       return res.status(400).json('Where is request body, Lebovski?');
+      // }
+      // return res.status(400).json('Where is book file, Bookovski?');
     }
     return res.render(200).json('ok, boomer');
   }
@@ -43,7 +46,7 @@ class BookRenderController {
       if (req.file) newBook.fileBook = req.file.path;
       const { id } = newBook;
       MOCK_BOOKS[bookIndex] = newBook;
-      return res.redirect(`${BOOKS_URL}/view/${id}`);
+      return res.redirect(`${BOOKS_URL}/${id}`);
     }
     return res.status(200).json('ok, boomer');
   }

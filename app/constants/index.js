@@ -2,7 +2,7 @@ const APP_ROOT_PATH = process.cwd();
 
 const BOOKS_FILE_PATH = 'public/books';
 
-const REQUIRED_FIELDS = ['title', 'description', 'authors', 'favorite', 'fileCover', 'fileName'];
+const REQUIRED_FIELDS = ['title', 'description', 'authors', 'favourite', 'fileCover', 'fileName'];
 
 const ERROR_ROUTE = '/404';
 const API_URL = '/api';

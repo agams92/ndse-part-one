@@ -1,4 +1,4 @@
-<form method="POST" class="mt-5">
+<form method="POST" class="mt-5" enctype='multipart/form-data'>
   <div class="form-group">
       <label for="inputTitle">Название</label>
       <input type="text"
@@ -22,11 +22,42 @@
       <label for="inputDesc">Описание</label>
       <textarea
               rows="3"
-              name="desc"
+              name="description"
               class="form-control"
               id="inputDesc"
       ><%= book.description %></textarea>
   </div>
+  <div class="form-group">
+    <label for="inputFav">Избранное</label>
+    <textarea
+            rows="3"
+            name="favourite"
+            class="form-control"
+            id="inputFav"
+    ><%= book.favourite %></textarea>
+</div>
+<div class="form-group">
+  <label for="inputCover">Обложка</label>
+  <textarea
+          rows="3"
+          name="fileCover"
+          class="form-control"
+          id="inputCover"
+  ><%= book.fileCover %></textarea>
+</div>
+<div class="form-group">
+  <label for="inputFileName">Название файла (што)</label>
+  <textarea
+          rows="3"
+          name="fileName"
+          class="form-control"
+          id="inputFileName"
+  ><%= book.fileName %></textarea>
+</div>
+<div class='form-group'>
+  <label for="inputFileBook">Файл книги</label>
+  <input name="fileBook" type="file"  id="inputFileBook">
+</div>
 
   <div class="form-group text-right ">
       <button type="submit" class="btn btn-primary">Сохранить</button>

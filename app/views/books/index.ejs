@@ -1,4 +1,5 @@
-<%- include("../layout/layout-start", {title: title}) %>
+<%- include("../mixins/layout-start", {title: title}) %>
+<%- include("../mixins/menu") %> 
 
   <h1>
     <%= title %>
@@ -40,4 +41,4 @@
       <h3 class="mt-5">Книг пока нет</h3>
       <% } %>
 
-<%- include("../layout/layout-end") %>
+<%- include("../mixins/layout-end") %>
