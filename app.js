@@ -1,15 +1,23 @@
 const express = require('express');
-const { USER_API_URL, BOOKS_API_URL } = require('./app/constants');
-const { UserApiRouter, BookApiRouter } = require('./app/api/routers');
+const path = require('path');
+
+const PORT = process.env.PORT || 3000;
+const { USER_API_URL, BOOKS_API_URL, BOOKS_URL } = require('./app/constants');
+const { UserApiRouter, BookApiRouter, BookRenderRouter } = require('./app/routers');
 
 const server = express();
+
+server.set('views', path.join(__dirname, 'app/views'));
+server.set('view engine', 'ejs');
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 const bookApiRouter = BookApiRouter();
 const userApiRouter = UserApiRouter();
+const bookRenderRouter = BookRenderRouter();
 
 server.use(BOOKS_API_URL, bookApiRouter);
 server.use(USER_API_URL, userApiRouter);
+server.use(BOOKS_URL, bookRenderRouter);
 
-server.listen(3000);
+server.listen(PORT, () => console.log(`> app is ready on port:${PORT}`));

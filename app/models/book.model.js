@@ -1,5 +1,6 @@
-const { BOOKS_FILE_PATH } = require("../constants");
-const { default: ShortUniqueId } = require("short-unique-id");
+const { default: ShortUniqueId } = require('short-unique-id');
+const { BOOKS_FILE_PATH } = require('../constants');
+
 const uid = new ShortUniqueId({
   dictionary: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
   length: 8,
@@ -8,12 +9,12 @@ const uid = new ShortUniqueId({
 class Book {
   constructor({
     id = Number(uid()),
-    title = "title",
-    description = "description",
-    authors = "authors",
-    favourite = "favourite",
-    fileCover = "fileCover",
-    fileName = "fileName",
+    title = 'title',
+    description = 'description',
+    authors = 'authors',
+    favourite = 'favourite',
+    fileCover = 'fileCover',
+    fileName = 'fileName',
     fileBook = `${BOOKS_FILE_PATH}/book.pdf`,
   }) {
     this.id = id;
@@ -27,4 +28,6 @@ class Book {
   }
 }
 
-module.exports = Book;
+const MOCK_BOOKS = [1, 2, 3].map((el) => new Book({ title: `book ${el}`, description: `description ${el}` }));
+
+module.exports = { Book, MOCK_BOOKS };

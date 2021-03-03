@@ -4,6 +4,7 @@ const BOOKS_FILE_PATH = 'public/books';
 
 const REQUIRED_FIELDS = ['title', 'description', 'authors', 'favorite', 'fileCover', 'fileName'];
 
+const ERROR_ROUTE = '/404';
 const API_URL = '/api';
 const USER_URL = '/user';
 const BOOKS_URL = '/books';
@@ -17,8 +18,10 @@ module.exports = {
   REQUIRED_FIELDS,
   USER_URL,
   BOOKS_URL,
+  API_URL,
   USER_API_URL,
   BOOKS_API_URL,
+  ERROR_ROUTE,
   NO_BOOK_BY_ID,
   NO_BOOK_ID,
   BOOKS_FILE_PATH,
