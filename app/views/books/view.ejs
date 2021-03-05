@@ -1,5 +1,5 @@
-<%- include("../mixins/layout-start", {title: title}) %>
-<%- include("../mixins/menu") %> 
+<%- include("../blocks/layout-start", {title: title}) %>
+<%- include("../blocks/menu") %> 
 
   <h1>
     <%= title %>
@@ -21,6 +21,10 @@
           <p class="card-text">
             <%= book.description %>.
           </p>
+          <h4>Файл книги</h4>
+          <p class="card-text">
+            <%= book.fileBook %>.
+          </p>
 
           <div class="text-right">
             <a class="btn btn-sm btn-primary" href="/books/update/<%= book.id %>">
@@ -33,4 +37,4 @@
     </div>
   </div>
 
-<%- include("../mixins/layout-end") %>
+<%- include("../blocks/layout-end") %>

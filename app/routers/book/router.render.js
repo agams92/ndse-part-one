@@ -15,7 +15,10 @@ const BookRenderRouter = () => {
 
   newRouter.param('id', bookRenderController.handleIdParam);
   newRouter.route('/:id').get(bookRenderController.viewBook);
-  newRouter.route('/update/:id').get(bookRenderController.modifyBook).post(bookRenderController.modifyBook);
+  newRouter
+    .route('/update/:id')
+    .get(bookRenderController.modifyBook)
+    .post(fileUpload.single('fileBook'), bookRenderController.modifyBook);
 
   return newRouter;
 };
