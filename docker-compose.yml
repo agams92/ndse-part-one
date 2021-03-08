@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  storage:
+    image: redis:alpine
+  counter:
+    image: agams92/ndse-part-one_counter
+    environment: 
+      - ADDRESS=storage
+      - PORT=3001
+    command: node index.js
+    depends_on: 
+      - storage
+  web:
+    image: agams92/ndse-part-one
+    ports:
+      - 80:3000
+    environment: 
+      - PORT=3000
+    command: npm run start

@@ -1,3 +1,4 @@
+const axios = require('axios');
 const { BOOKS_URL, REQUIRED_FIELDS } = require('../../constants');
 const { hasOwnProps, createBookIdParamHandler } = require('../../utils');
 const { Book, MOCK_BOOKS } = require('../../models');
@@ -11,9 +12,14 @@ class BookRenderController {
     return res.render('books/index', { title: 'Книги', books: MOCK_BOOKS });
   }
 
-  viewBook(req, res) {
+  async viewBook(req, res) {
     const { book } = req;
-    return res.render('books/view', { title: 'Книга', book });
+    const { id } = book;
+    const dataCounter = await axios({ baseURL: 'http://localhost', url: `/counter/${id}`, port: 3001 });
+    const bookCounter = dataCounter.data;
+    console.log('++++');
+    console.log(bookCounter);
+    return res.render('books/view', { title: 'Книга', book, bookCounter });
   }
 
   addBook(req, res) {

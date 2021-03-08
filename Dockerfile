@@ -9,5 +9,5 @@ COPY package.json ./
 
 RUN yarn
 
-EXPOSE 3000
+EXPOSE 3000 3001
 CMD ["node", "app.js"]

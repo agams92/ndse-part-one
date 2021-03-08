@@ -28,6 +28,5 @@ class Book {
   }
 }
 
-const MOCK_BOOKS = [1, 2, 3].map((el) => new Book({ title: `book ${el}`, description: `description ${el}` }));
-
+const MOCK_BOOKS = [1, 2, 3].map((el) => new Book({ id: el, title: `book ${el}`, description: `description ${el}` }));
 module.exports = { Book, MOCK_BOOKS };
