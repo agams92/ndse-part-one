@@ -4,7 +4,7 @@ WORKDIR /ndse-part-one
 
 COPY app.js ./
 COPY ./app ./app
-COPY public/books ./
+COPY public/books ./public/books
 COPY package.json ./
 
 RUN yarn

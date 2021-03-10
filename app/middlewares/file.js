@@ -1,5 +1,6 @@
 const multer = require('multer');
-const { BOOKS_FILE_PATH } = require('../constants');
+const fs = require('fs');
+const { BOOKS_FILE_PATH, APP_ROOT_PATH } = require('../constants');
 
 const storage = multer.diskStorage({
   destination(_, __, cb) {
