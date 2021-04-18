@@ -2,12 +2,12 @@ FROM node:latest
 
 WORKDIR /ndse-part-one
 
-COPY app.js ./
-COPY ./app ./app
-COPY public/books ./public/books
 COPY package.json ./
-
 RUN yarn
+COPY app.ts ./
+COPY ./app ./app
+COPY tsconfig.json ./
+COPY public/books ./public/books
 
 EXPOSE 3000 3001
-CMD ["node", "app.js"]
+CMD ["node", "app.ts"]

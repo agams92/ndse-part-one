@@ -23,9 +23,9 @@ services:
       - mongodb
 
   web:
-    build: .
-    ports:
-      - 80:${WEB_SERVICE_PORT:-3000}
+    image: node:15.8-alpine3.11
+    volumes:
+    - ".:/app"
     environment: 
       - DB_USERNAME=${DB_USERNAME:-root}
       - DB_PASSWORD=${DB_PASSWORD:-password}
@@ -34,4 +34,5 @@ services:
       - PORT=${WEB_SERVICE_PORT:-3000}
     depends_on:
       - mongodb
-    command: npm run start
+    working_dir: /ndse-part-one
+    command: sh -c "cd /ndse-part-one; npm install; npm run dev;"

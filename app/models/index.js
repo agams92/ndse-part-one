@@ -1,5 +1,5 @@
 const User = require('./user.model');
-const Book = require('./book.model');
+const Book = require('./book.model.ts');
 
 const initializeDB = async () => {
   const booksInitCount = [1, 2, 3];
