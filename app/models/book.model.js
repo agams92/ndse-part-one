@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { BOOKS_FILE_PATH } =require('../constants/index');
-import type {IBook} from '../types/book'
+const { BOOKS_FILE_PATH } = require('../constants');
 
 const bookSchema = new Schema({
   title: {
@@ -33,6 +32,6 @@ const bookSchema = new Schema({
   },
 });
 
-const Book:IBook = model('Book', bookSchema);
+const Book = model('Book', bookSchema);
 
 module.exports = Book;

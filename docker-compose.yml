@@ -23,7 +23,7 @@ services:
       - mongodb
 
   web:
-    build: .
+    image: agams92/ndse-part-one:mongo
     ports:
       - 80:${WEB_SERVICE_PORT:-3000}
     environment: 
