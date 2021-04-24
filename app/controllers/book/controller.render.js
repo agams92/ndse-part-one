@@ -1,21 +1,19 @@
 const axios = require('axios');
-const { BOOKS_URL, REQUIRED_FIELDS } = require('../../constants');
-const { hasOwnProps, createBookIdParamHandler } = require('../../utils');
-const { Book, MOCK_BOOKS } = require('../../models');
+const { BOOKS_URL } = require('../../constants');
+const { errorHandlerRender } = require('../../utils');
+const { Book } = require('../../models');
 
 const counterApi = axios.create({ baseURL: 'http://counter:3001' });
 class BookRenderController {
-  handleIdParam(req, res, next, id) {
-    return createBookIdParamHandler(MOCK_BOOKS)(req, res, next, id);
-  }
-
   viewAllBooks(_, res) {
-    return res.render('books/index', { title: 'Книги', books: MOCK_BOOKS });
+    return Book.find()
+      .then((books) => res.render('books/index', { title: 'Книги', books }))
+      .catch(errorHandlerRender(res));
   }
 
   async viewBook(req, res) {
-    const { book } = req;
-    const { id } = book;
+    const { id } = req.params;
+    const book = await Book.findById(id);
     try {
       const dataCounter = await counterApi.post(`counter/${id}/incr`);
       const bookViews = dataCounter.data;
@@ -34,14 +32,8 @@ class BookRenderController {
     if (method === 'POST') {
       if (file) {
         if (body) {
-          const hasAllFields = hasOwnProps(body, REQUIRED_FIELDS);
-          if (hasAllFields) {
-            const newBook = new Book(body);
-            const { id } = newBook;
-            MOCK_BOOKS.push(newBook);
-            return res.redirect(`${BOOKS_URL}/${id}`);
-          }
-          return res.status(400).json('Some field are missing in request');
+          const newBook = new Book({ ...body, fileBook: file.path });
+          return newBook.save((err, { _id }) => res.redirect(`${BOOKS_URL}/${_id}`));
         }
         return res.status(400).json('Where is request body, Lebovski?');
       }
@@ -51,16 +43,25 @@ class BookRenderController {
   }
 
   modifyBook(req, res) {
-    const { method, body, book, bookIndex, file } = req;
-    if (method === 'GET') return res.render('books/update', { title: 'Изменить книгу', book });
-    if (method === 'POST') {
-      const newBook = { ...book, ...body };
-      if (file) newBook.fileBook = file.path;
-      const { id } = newBook;
-      MOCK_BOOKS[bookIndex] = newBook;
-      return res.redirect(`${BOOKS_URL}/${id}`);
-    }
-    return res.status(200).json('ok, boomer');
+    const { method, body, file, params } = req;
+    const { id } = params;
+    return Book.findById(id)
+      .then((book) => {
+        if (method === 'GET') {
+          return res.render('books/update', { title: 'Изменить книгу', book });
+        }
+        if (method === 'POST') {
+          if (file) body.fileBook = file.path;
+          return book.updateOne(body);
+        }
+        return res.status(200).json('ok, boomer');
+      })
+      .then((result) => {
+        if (result) {
+          return res.redirect(`${BOOKS_URL}/${id}`);
+        }
+      })
+      .catch(errorHandlerRender(res));
   }
 }
 

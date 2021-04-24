@@ -12,8 +12,6 @@ const BookApiRouter = () => {
     .get(bookApiController.getAllBooks)
     .post(fileUpload.single('fileBook'), bookApiController.addBook);
 
-  newRouter.param('id', bookApiController.handleIdParam);
-
   newRouter
     .route(`/:id`)
     .get(bookApiController.getBookById)
