@@ -34,9 +34,18 @@ services:
       - storage
       
   web:
-    build: ./
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    container_name: ndse-docker
+    volumes:
+      - ./src:/ndse-part-one/src
+      - ./nodemon.json:/ndse-part-one/nodemon.json
     ports:
       - 80:${WEB_SERVICE_PORT:-3000}
+    expose: 
+      - ${WEB_SERVICE_PORT:-3000}
     environment: 
       - DB_USERNAME=${DB_USERNAME:-root}
       - DB_PASSWORD=${DB_PASSWORD:-password}
@@ -46,4 +55,4 @@ services:
     depends_on:
       - mongodb
       - counter
-    command: npm run start
+    command: npm run dev

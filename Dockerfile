@@ -1,13 +1,20 @@
-FROM node:latest
+# Development stage
+FROM node:latest as base
 
 WORKDIR /ndse-part-one
 
 COPY package.json ./
 RUN yarn
 
-COPY app.js ./
-COPY ./app ./app
-COPY public/books ./public/books
+COPY ./src/ ./src/
+COPY ./public/ ./public/
+COPY ./tsconfig.json ./
+COPY ./nodemon.json ./
 
-EXPOSE 3000 3001
-CMD ["node", "app.js"]
+# Production stage
+
+FROM base as production
+
+ENV NODE_PATH=./build
+
+RUN npm run build
