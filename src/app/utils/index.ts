@@ -1,11 +1,12 @@
 import { ERROR_ROUTE } from '../constants';
+import {Response} from '../common-types'
 
-const errorHandlerApi = (res:any) => (e:any) => {
+const errorHandlerApi = (res:Response) => (e:any) => {
   console.log(e);
   return res.status(500).json(e);
 };
 
-const errorHandlerRender = (res:any) => (e:any) => {
+const errorHandlerRender = (res:Response) => (e:any) => {
   console.log(e);
   return res.status(500).redirect(ERROR_ROUTE);
 };

@@ -3,12 +3,13 @@ import { BOOKS_URL } from '../../../constants';
 import { errorHandlerRender } from '../../../utils';
 import { container } from '../../../infrastructure/container';
 import { BooksService } from '../../../services';
+import {Request, Response} from '../../../common-types'
 
 const service = container.get(BooksService);
 
 const counterApi = axios.create({ baseURL: 'http://counter:3001' });
 class BookRenderController {
-  async viewAllBooks(_: any, res: any) {
+  async viewAllBooks(_: Request, res: Response) {
     try {
       const books = await service.getAllBooks();
       return res.render('books/index', { title: 'Книги', books });
@@ -17,7 +18,7 @@ class BookRenderController {
     }
   }
 
-  async viewBook(req: any, res: any) {
+  async viewBook(req: Request, res: Response) {
     const { id } = req.params;
     try {
       const book = await service.getBook(id);
@@ -29,7 +30,7 @@ class BookRenderController {
     }
   }
 
-  async addBook(req: any, res: any) {
+  async addBook(req: Request, res: Response) {
     const { method, body, file } = req;
     try {
       if (method === 'GET') return res.render('books/create', { title: 'Добавить книгу', book: {} });
@@ -43,13 +44,13 @@ class BookRenderController {
         }
         return res.status(400).json('Where is book file, Bookovski?');
       }
-      return res.render(200).json('ok, boomer');
+      return res.status(200).json('ok, boomer');
     } catch (e) {
       errorHandlerRender(res)(e);
     }
   }
 
-  async modifyBook(req: any, res: any) {
+  async modifyBook(req: Request, res: Response) {
     const { method, body, file, params } = req;
     const { id } = params;
     try {

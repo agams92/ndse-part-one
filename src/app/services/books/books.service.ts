@@ -22,7 +22,7 @@ interface UpdateBookDto {
 }
 
 export default class BooksService {
-  async create(data: CreateBookDto): Promise<{book: IBook, _id: number}> {
+  async create(data: CreateBookDto): Promise<{book: IBook, _id: string}> {
     const book = new BookModel(data);
     await book.save();
     const { _id } = book;
@@ -33,15 +33,15 @@ export default class BooksService {
     return BookModel.find().exec();
   }
 
-  getBook(id: number): Promise<IBook> {
+  getBook(id: string): Promise<IBook> {
     return BookModel.findById(id).exec();
   }
 
-  updateBook(id: number, newData: UpdateBookDto, options: { new: boolean }): Promise<IBook> {
+  updateBook(id: string, newData: UpdateBookDto, options: { new: boolean }): Promise<IBook> {
     return BookModel.findByIdAndUpdate(id, newData, options).exec();
   }
 
-  deleteBook(id: number): Promise<{ ok?: number }> {
+  deleteBook(id: string): Promise<{ ok?: number }> {
     return BookModel.deleteOne({ _id: id }).exec();
   }
 }

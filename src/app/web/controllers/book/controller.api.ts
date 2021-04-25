@@ -3,11 +3,11 @@ import { APP_ROOT_PATH } from '../../../constants';
 import { errorHandlerApi } from '../../../utils';
 import { container } from '../../../infrastructure/container';
 import { BooksService } from '../../../services';
+import {Request, Response} from '../../../common-types'
 
 const service = container.get(BooksService);
-
-class BookApiController {
-  async getAllBooks(_: any, res: any) {
+class BookApiController {  
+  async getAllBooks(_: Request, res:Response) {
     try {
       const books = await service.getAllBooks();
       return res.status(200).json(books);
@@ -16,7 +16,7 @@ class BookApiController {
     }
   }
 
-  async getBookById(req: any, res: any) {
+  async getBookById(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const book = await service.getBook(id);
@@ -26,7 +26,7 @@ class BookApiController {
     }
   }
 
-  async addBook(req: any, res: any) {
+  async addBook(req: Request, res: Response) {
     try {
       const { body, file } = req;
       if (body) {
@@ -43,7 +43,7 @@ class BookApiController {
     }
   }
 
-  async modifyBookById(req: any, res: any) {
+  async modifyBookById(req: Request, res: Response) {
     const { body, params } = req;
     const { id } = params;
     if (req.file) body.fileBook = req.file.path;
@@ -58,16 +58,15 @@ class BookApiController {
     }
   }
 
-  deleteBookById(req: any, res: any) {
-    const { book } = req;
-    const { id } = book;
+  deleteBookById(req: Request, res: Response) {
+    const { id } = req.params;
     return service
       .deleteBook(id)
       .then(() => res.status(200).json('ok'))
       .catch(errorHandlerApi(res));
   }
 
-  async downloadBook(req: any, res: any) {
+  async downloadBook(req: Request, res: Response) {
     const { id } = req.params;
     try {
       const book = await service.getBook(id);
