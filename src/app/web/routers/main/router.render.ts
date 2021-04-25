@@ -1,5 +1,5 @@
 import express from 'express';
-import { ERROR_ROUTE } from '../../constants';
+import { ERROR_ROUTE } from '../../../constants';
 
 const MainRenderRouter = () => {
   const newRouter = express.Router();

@@ -1,5 +1,6 @@
-import { Schema, model } from 'mongoose';
-import { BOOKS_FILE_PATH } from '../constants';
+import { Schema, model, Document } from 'mongoose';
+import { BOOKS_FILE_PATH } from '../../constants';
+import { IBook } from './books.types';
 
 const bookSchema = new Schema({
   title: {
@@ -32,6 +33,6 @@ const bookSchema = new Schema({
   },
 });
 
-const Book = model('Book', bookSchema);
+const BookModel = model<IBook & Document>('Book', bookSchema);
 
-export default Book;
+export default BookModel;

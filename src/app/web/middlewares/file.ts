@@ -1,6 +1,5 @@
 import multer from 'multer';
-import fs from 'fs';
-import { BOOKS_FILE_PATH, APP_ROOT_PATH } from '../constants';
+import { BOOKS_FILE_PATH, APP_ROOT_PATH } from '../../constants';
 
 const storage = multer.diskStorage({
   destination(_, __, cb) {
